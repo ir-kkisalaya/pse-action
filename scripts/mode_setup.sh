@@ -97,11 +97,11 @@ pull_and_start_pse_container() {
   fi
 
   # Login to ECR
-  log "Logging in to ECR"
-  if [[ "$DEBUG" == "true" ]]; then
-    set +x
-  fi
-  echo "$ECR_TOKEN" | run_with_privilege docker login --username "$ECR_USERNAME" --password-stdin "$ECR_REGISTRY_ID.dkr.ecr.$ECR_REGION.amazonaws.com"
+  log "SKIP: Logging in to ECR"
+#  if [[ "$DEBUG" == "true" ]]; then
+#    set +x
+#  fi
+#  echo "$ECR_TOKEN" | run_with_privilege docker login --username "$ECR_USERNAME" --password-stdin "$ECR_REGISTRY_ID.dkr.ecr.$ECR_REGION.amazonaws.com"
 
 
   # Define possible repository paths to try
