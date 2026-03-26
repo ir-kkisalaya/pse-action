@@ -89,19 +89,19 @@ discover_pse_proxy_ip() {
     
     # Try to find the container by image name
     debug "Looking for PSE proxy container by image..." >&2
-    local pse_containers=$(run_with_privilege docker ps --filter "ancestor=invisirisk/pse-proxy" --format "{{.Names}}" 2>/dev/null || echo "")
+    local pse_containers=$(run_with_privilege docker ps --filter "ancestor=kkisalaya/pse" --format "{{.Names}}" 2>/dev/null || echo "")
     
     # If not found, try with ECR path
-    if [ -z "$pse_containers" ]; then
-      debug "Trying with ECR path..." >&2
-      pse_containers=$(run_with_privilege docker ps --filter "ancestor=282904853176.dkr.ecr.us-west-2.amazonaws.com/invisirisk/pse-proxy" --format "{{.Names}}" 2>/dev/null || echo "")
-    fi
+   # if [ -z "$pse_containers" ]; then
+   #   debug "Trying with ECR path..." >&2
+   #   pse_containers=$(run_with_privilege docker ps --filter "ancestor=282904853176.dkr.ecr.us-west-2.amazonaws.com/invisirisk/pse-proxy" --format "{{.Names}}" 2>/dev/null || echo "")
+   # fi
     
     # If still not found, try with any available registry ID and region
-    if [ -z "$pse_containers" ] && [ -n "$ECR_REGISTRY_ID" ] && [ -n "$ECR_REGION" ]; then
-      debug "Trying with provided ECR registry ID and region..." >&2
-      pse_containers=$(run_with_privilege docker ps --filter "ancestor=$ECR_REGISTRY_ID.dkr.ecr.$ECR_REGION.amazonaws.com/invisirisk/pse-proxy" --format "{{.Names}}" 2>/dev/null || echo "")
-    fi
+    #if [ -z "$pse_containers" ] && [ -n "$ECR_REGISTRY_ID" ] && [ -n "$ECR_REGION" ]; then
+    #  debug "Trying with provided ECR registry ID and region..." >&2
+    #  pse_containers=$(run_with_privilege docker ps --filter "ancestor=$ECR_REGISTRY_ID.dkr.ecr.$ECR_REGION.amazonaws.com/invisirisk/pse-proxy" --format "{{.Names}}" 2>/dev/null || echo "")
+    #fi
     
     # If containers found, get the IP of the first one
     if [ -n "$pse_containers" ]; then
@@ -122,7 +122,7 @@ discover_pse_proxy_ip() {
     debug "Attempting to resolve PSE proxy using hostname..." >&2
     
     # Determine which hostname to use - use PROXY_HOSTNAME if provided, otherwise default to 'pse-proxy'
-    local hostname_to_try="pse-proxy"
+    local hostname_to_try="pse"
     local alt_hostname="${hostname_to_try}.local"
     
     if [ -n "$PROXY_HOSTNAME" ]; then
