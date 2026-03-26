@@ -103,14 +103,13 @@ pull_and_start_pse_container() {
 
   # Define possible repository paths to try
   local REPO_PATHS=(
-  #  "$ECR_REGISTRY_ID.dkr.ecr.$ECR_REGION.amazonaws.com/invisirisk/pse-proxy:latest"
     "kkisalaya/pse:latest"
   )
 
   # Try to pull the PSE container from each repository path
   local PSE_IMAGE=""
   local PULL_OUTPUT=""
-  local MAX_RETRIES=3
+  local MAX_RETRIES=1
   local ATTEMPT=1
   local RETRY_DELAY=5
 
